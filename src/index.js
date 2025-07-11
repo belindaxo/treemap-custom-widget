@@ -7,6 +7,7 @@ import { createChartStylesheet } from './config/styles';
 import { parseMetadata } from './data/metadataParser';
 import { processSeriesData } from './data/dataProcessor';
 import { applyHighchartsDefaults } from './config/highchartsSetup';
+import { generateLevels } from './config/chartUtils';
 
 (function () {
     /**
@@ -113,11 +114,13 @@ import { applyHighchartsDefaults } from './config/highchartsSetup';
             const totalLevels = dimensions.length;
             console.log('Total levels: ', totalLevels);
 
+            const levels = generateLevels(totalLevels);
+
             const series = [{
                 layoutAlgorithm: 'squarified',
                 name: seriesName,
                 allowTraversingTree: true,
-                borderRadius: 6,
+                animationLimit: 1000,
                 borderColor: '#ffffff',
                 cluster: {
                     enabled: true,
@@ -126,10 +129,11 @@ import { applyHighchartsDefaults } from './config/highchartsSetup';
                     reductionFactor: 10
                 },
                 dataLabels: {
-                    enabled: true,
-                    headers: true
+                    enabled: false, 
+                    allowOverlap: true
                 },
-                data: seriesData
+                data: seriesData,
+                levels: levels,
             }]
 
             applyHighchartsDefaults();
