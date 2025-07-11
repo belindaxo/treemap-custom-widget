@@ -117,11 +117,17 @@ import { applyHighchartsDefaults } from './config/highchartsSetup';
                 layoutAlgorithm: 'squarified',
                 name: seriesName,
                 allowTraversingTree: true,
+                borderRadius: 6,
+                borderColor: '#ffffff',
                 cluster: {
                     enabled: true,
                     pixelWidth: 15,
                     pixelHeight: 30,
                     reductionFactor: 10
+                },
+                dataLabels: {
+                    enabled: true,
+                    headers: true
                 },
                 data: seriesData
             }]
