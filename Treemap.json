@@ -14,7 +14,7 @@
             "tag": "com-sap-sample-treemap",
             "url": "https://belindaxo.github.io/treemap-custom-widget/dist/bundle.js",
             "integrity": "sha256-",
-            "ignoreIntegrity": false
+            "ignoreIntegrity": true
         }
     ],
     "properties": {
