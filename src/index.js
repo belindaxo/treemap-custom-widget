@@ -148,6 +148,9 @@ import { generateLevels } from './config/chartUtils';
                 credits: {
                     enabled: false
                 },
+                exporting: {
+                    enabled: false
+                },
                 series
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
