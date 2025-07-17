@@ -7,7 +7,7 @@ import { createChartStylesheet } from './config/styles';
 import { parseMetadata } from './data/metadataParser';
 import { processSeriesData } from './data/dataProcessor';
 import { applyHighchartsDefaults } from './config/highchartsSetup';
-import { generateLevels, updateSubtitle } from './config/chartUtils';
+import { generateLevels, updateTitle, updateSubtitle } from './config/chartUtils';
 import { scaleValue } from './formatting/scaleFormatter';
 
 (function () {
@@ -110,14 +110,21 @@ import { scaleValue } from './formatting/scaleFormatter';
             const seriesData = processSeriesData(data, dimensions, measure);
             console.log('processSeriesData - seriesData: ', seriesData);
 
-            const seriesName = measures[0]?.label || 'Measure';
-
             const totalLevels = dimensions.length;
             console.log('Total levels: ', totalLevels);
-
             const levels = generateLevels(totalLevels);
 
             const scaleFormat = (value) => scaleValue(value, this.scaleFormat, this.decimalPlaces);
+
+            const seriesName = measures[0]?.label || 'Measure';
+            const dimDescriptions = dimensions.map(dim => {
+                const dimDescription = dim.description || 'Dimension Description';
+                return dimDescription;
+            });
+            const dimPart = dimDescriptions.join(', ');
+            const autoTitle = `${seriesName} per ${dimPart}`;
+            const titleText = updateTitle(autoTitle, this.chartTitle);
+
             const subtitleText = updateSubtitle(this.chartSubtitle, this.scaleFormat);
 
             const series = [{
@@ -156,7 +163,7 @@ import { scaleValue } from './formatting/scaleFormatter';
                     enabled: false
                 },
                 title: {
-                    text: this.chartTitle || '',
+                    text: titleText,
                     align: this.titleAlignment || 'left',
                     style: {
                         fontSize: this.titleSize || '16px',

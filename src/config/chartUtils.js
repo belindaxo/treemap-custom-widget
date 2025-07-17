@@ -25,6 +25,20 @@ export function generateLevels(numLevels) {
 }
 
 /**
+ * Updates the chart title based on the auto-generated title or user-defined title.
+ * @param {string} autoTitle - Automatically generated title based on series and dimensions.
+ * @param {string} chartTitle - User-defined title for the chart.
+ * @returns {string} The title text.
+ */
+export function updateTitle(autoTitle, chartTitle) {
+    if (!chartTitle || chartTitle === '') {
+        return autoTitle;
+    } else {
+        return chartTitle;
+    }
+}
+
+/**
  * Determines subtitle text based on scale format or user input.
  * @param {string} chartSubtitle - The user-defined subtitle for the chart.
  * @param {string} scaleFormat - The scale format used in the chart (e.g., 'k', 'm', 'b').
