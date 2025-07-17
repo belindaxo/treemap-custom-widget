@@ -150,7 +150,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
      * Custom Web Component for the Styling Panel (APS) of the widget.
      * @extends HTMLElement
      */
-    class HeatmapAps extends HTMLElement {
+    class TreemapAps extends HTMLElement {
         /**
          * Initializes the shadow DOM and sets up event listeners for form inputs.
          */
