@@ -7,7 +7,8 @@ import { createChartStylesheet } from './config/styles';
 import { parseMetadata } from './data/metadataParser';
 import { processSeriesData } from './data/dataProcessor';
 import { applyHighchartsDefaults } from './config/highchartsSetup';
-import { generateLevels } from './config/chartUtils';
+import { generateLevels, updateSubtitle } from './config/chartUtils';
+import { scaleValue } from './formatting/scaleFormatter';
 
 (function () {
     /**
@@ -116,6 +117,9 @@ import { generateLevels } from './config/chartUtils';
 
             const levels = generateLevels(totalLevels);
 
+            const scaleFormat = (value) => scaleValue(value, this.scaleFormat, this.decimalPlaces);
+            const subtitleText = updateSubtitle(this.chartSubtitle, this.scaleFormat);
+
             const series = [{
                 layoutAlgorithm: 'squarified',
                 name: seriesName,
@@ -150,6 +154,24 @@ import { generateLevels } from './config/chartUtils';
                 },
                 exporting: {
                     enabled: false
+                },
+                title: {
+                    text: this.chartTitle || '',
+                    align: this.titleAlignment || 'left',
+                    style: {
+                        fontSize: this.titleSize || '16px',
+                        fontWeight: this.titleFontStyle || 'bold',
+                        color: this.titleColor || '#004b8d',
+                    }
+                },
+                subtitle: {
+                    text: subtitleText,
+                    align: this.subtitleAlignment || "left",
+                    style: {
+                        fontSize: this.subtitleSize || "11px",
+                        fontStyle: this.subtitleFontStyle || "normal",
+                        color: this.subtitleColor || "#000000",
+                    },
                 },
                 series
             };
