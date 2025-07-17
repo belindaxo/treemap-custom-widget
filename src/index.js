@@ -9,6 +9,7 @@ import { processSeriesData } from './data/dataProcessor';
 import { applyHighchartsDefaults } from './config/highchartsSetup';
 import { generateLevels, updateTitle, updateSubtitle } from './config/chartUtils';
 import { scaleValue } from './formatting/scaleFormatter';
+import { formatTooltip } from './formatting/tooltipformatter';
 
 (function () {
     /**
@@ -179,6 +180,11 @@ import { scaleValue } from './formatting/scaleFormatter';
                         fontStyle: this.subtitleFontStyle || "normal",
                         color: this.subtitleColor || "#000000",
                     },
+                },
+                tooltip: {
+                    followPointer: true,
+                    hideDelay: 0,
+                    formatter: formatTooltip(scaleFormat, dimensions)
                 },
                 series
             };
