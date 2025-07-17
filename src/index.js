@@ -182,6 +182,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     },
                 },
                 tooltip: {
+                    useHTML: true,
                     followPointer: true,
                     hideDelay: 0,
                     formatter: formatTooltip(scaleFormat, dimensions)
