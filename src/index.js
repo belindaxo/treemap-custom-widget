@@ -143,6 +143,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 },
                 dataLabels: {
                     enabled: true, 
+                    headers: false,
                     allowOverlap: true
                 },
                 data: seriesData,
