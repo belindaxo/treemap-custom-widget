@@ -11,7 +11,7 @@ export function generateLevels(numLevels) {
             dataLabels: {
                 enabled: true,
                 align: isFirst ? 'left' : 'center',
-                headers: isLeaf ? false : true,
+                headers: isFirst,
                 padding: isFirst ? 3 : 0
 
             },
