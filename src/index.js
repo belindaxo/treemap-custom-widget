@@ -132,6 +132,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 layoutAlgorithm: 'squarified',
                 name: seriesName,
                 allowTraversingTree: true,
+                alternateStartingDirection: true,
                 animationLimit: 1000,
                 borderColor: '#ffffff',
                 cluster: {
