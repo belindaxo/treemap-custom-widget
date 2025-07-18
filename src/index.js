@@ -181,12 +181,12 @@ import { formatTooltip } from './formatting/tooltipformatter';
                         color: this.subtitleColor || "#000000",
                     },
                 },
-                // tooltip: {
-                //     useHTML: true,
-                //     followPointer: true,
-                //     hideDelay: 0,
-                //     formatter: formatTooltip(scaleFormat, dimensions)
-                // },
+                tooltip: {
+                    useHTML: true,
+                    followPointer: false,
+                    hideDelay: 0,
+                    formatter: formatTooltip(scaleFormat, dimensions)
+                },
                 series
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
