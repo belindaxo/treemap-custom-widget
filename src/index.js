@@ -142,7 +142,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     reductionFactor: 10
                 },
                 dataLabels: {
-                    enabled: false, 
+                    enabled: true, 
                     allowOverlap: true
                 },
                 data: seriesData,
