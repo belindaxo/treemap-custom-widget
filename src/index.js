@@ -113,13 +113,13 @@ import { formatTooltip } from './formatting/tooltipformatter';
             const [measure] = measures;
             const seriesData = processSeriesData(data, dimensions, measure);
             console.log('processSeriesData - seriesData: ', seriesData);
-            console.log('Root nodes in seriesData:', seriesData.filter(node => node.parent === ''));
+            console.log('Root nodes in seriesData:', seriesData.filter(node => !node.parent));
 
             const totalLevels = dimensions.length;
             console.log('Total levels: ', totalLevels);
             const levels = generateLevels(totalLevels);
 
-            const validCategoryNames = seriesData.filter(node => node.parent === '').map(node => node.name) || [];
+            const validCategoryNames = seriesData.filter(node => !node.parent).map(node => node.name) || [];
             console.log('validCategoryNames: ', validCategoryNames);
             if (JSON.stringify(this._lastSentCategories) !== JSON.stringify(validCategoryNames)) {
                 this._lastSentCategories = validCategoryNames;
