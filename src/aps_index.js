@@ -203,7 +203,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                     input.style.marginLeft = '8px';
 
                     const currentColor = this.customColors.find(c => c.category === categoryName)?.color;
-                    const defaultIndex = this.validCategoryNames/indexOf(categoryName) % defaultColors.length;
+                    const defaultIndex = this.validCategoryNames.indexOf(categoryName) % defaultColors.length;
                     input.value = currentColor || defaultColors[defaultIndex];
 
                     input.addEventListener('change', () => {
@@ -215,13 +215,13 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                                 this.customColors = this.customColors.filter(c => c.category !== categoryName);
                             } else {
                                 existing.color = updatedColor;
-                                this.customColors = [...this.customColors];
+                                this.customColors = [...this.customColors]; // force reactivity
                             }
                         } else if (updatedColor !== defaultColors[defaultIndex]) {
                             this.customColors = [...this.customColors, { category: categoryName, color: updatedColor }];
                         }
 
-                        this._submit(new Event('submit')); 
+                        this._submit(new Event('submit'));
                     });
 
                     wrapper.appendChild(label);
