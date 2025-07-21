@@ -113,6 +113,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
             const [measure] = measures;
             const seriesData = processSeriesData(data, dimensions, measure);
             console.log('processSeriesData - seriesData: ', seriesData);
+            console.log('Root nodes in seriesData:', seriesData.filter(node => node.parent === ''));
 
             const totalLevels = dimensions.length;
             console.log('Total levels: ', totalLevels);
