@@ -29,6 +29,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
             this.shadowRoot.innerHTML = `
                 <div id="container"></div>
             `;
+
+            this._lastSentCategories = [];
         }
 
         /**
@@ -66,7 +68,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
             return [
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
-                'scaleFormat', 'decimalPlaces'                                                              // Number formatting properties
+                'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
+                'customColors'                                                                              // Color settings
             ];
         }
 
@@ -114,6 +117,36 @@ import { formatTooltip } from './formatting/tooltipformatter';
             const totalLevels = dimensions.length;
             console.log('Total levels: ', totalLevels);
             const levels = generateLevels(totalLevels);
+
+            const validCategoryNames = seriesData.filter(node => node.parent === '').map(node => node.name) || [];
+            console.log('validCategoryNames: ', validCategoryNames);
+            if (JSON.stringify(this._lastSentCategories) !== JSON.stringify(validCategoryNames)) {
+                this._lastSentCategories = validCategoryNames;
+                this.dispatchEvent(new CustomEvent('propertiesChanged', {
+                    detail: {
+                        properties: {
+                            validCategoryNames
+                        }
+                    }
+                }));
+            }
+
+            const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#006ac7', '#ccced2', '#bf8028', '#00e4a7'];
+            const customColors = this.customColors || [];
+
+            seriesData.forEach(node => {
+                if (node.parent === '') {
+                    const colorEntry = customColors.find(c => c.category === node.name);
+                    if (colorEntry && colorEntry.color) {
+                        node.color = colorEntry.color;
+                    } else {
+                        const index = validCategoryNames.indexOf(node.name);
+                        node.color = defaultColors[index % defaultColors.length];
+                    }
+                }
+            });
+
+            console.log('seriesData with colors: ', seriesData);
 
             const scaleFormat = (value) => scaleValue(value, this.scaleFormat, this.decimalPlaces);
 
