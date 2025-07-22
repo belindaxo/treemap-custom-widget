@@ -169,12 +169,12 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 alternateStartingDirection: true,
                 animationLimit: 1000,
                 borderColor: '#ffffff',
-                // cluster: {
-                //     enabled: true,
-                //     pixelWidth: 15,
-                //     pixelHeight: 30,
-                //     reductionFactor: 10
-                // },
+                cluster: {
+                    enabled: true,
+                    pixelWidth: 15,
+                    pixelHeight: 30,
+                    reductionFactor: 10
+                },
                 dataLabels: {
                     enabled: true, 
                     headers: false,
