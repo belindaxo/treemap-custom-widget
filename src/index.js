@@ -196,7 +196,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                             const series = chart.series[0];
                             const newLevel = breadcrumbs.level;
                             const rootLevel = (newLevel === 0) ? 1 : newLevel;
-                            // FILTERING LOGIC
                             const rootId = breadcrumbs.levelOptions.id;
                             console.log('Breadcrumbs - rootId:', rootId);
                             const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
@@ -207,7 +206,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                 return;
                             }
 
-                            // Remove existing filters before applying new ones
                             linkedAnalysis.removeFilters();
 
                             const labels = rootId.split('|');
@@ -304,8 +302,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                                 selection[dim.id] = matchingRow[dim.key].id;
                                             }
                                         });
-
-                                        // linkedAnalysis.removeFilters();
                                         console.log('point.events.click - Leaf Selection:', selection);
                                         linkedAnalysis.setFilters(selection);
                                         return;

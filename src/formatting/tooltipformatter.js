@@ -8,7 +8,6 @@ import * as Highcharts from 'highcharts';
  */
 export function formatTooltip(scaleFormat, dimensions) {
     return function () {
-        console.log(this);
         const seriesName = this.series.name;
         const name = this.name;
         const description = this.point.description;
