@@ -267,6 +267,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
                         point: {
                             events: {
                                 click: (event) => {
+                                    const clickedPoint = event.point;
+                                    console.log('point.events.click - clickedPoint:', clickedPoint);
                                     const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
                                     if (!linkedAnalysis) return;
 
