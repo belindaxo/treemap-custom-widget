@@ -10,7 +10,7 @@ export function generateLevels(numLevels) {
             borderWidth: isFirst ? 3 : 1,
             dataLabels: {
                 enabled: true,
-                align: isFirst ? 'left' : 'center',
+                // align: isFirst ? 'left' : 'center',
                 headers: isLeaf ? false : true,
                 padding: isFirst ? 3 : 0
 
