@@ -189,6 +189,10 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 breadcrumbs: {
                     events: {
                         click: function (button, breadcrumbs) {
+                            const chart = this._chart;
+                            const series = chart.series[0];
+                            const newLevel = breadcrumbs.level;
+                            const rootLevel = (newLevel === 0) ? 1 : newLevel;
                             // FILTERING LOGIC
                             const rootId = breadcrumbs.levelOptions.id;
                             console.log('Breadcrumbs - rootId:', rootId);
@@ -268,6 +272,13 @@ import { formatTooltip } from './formatting/tooltipformatter';
                             events: {
                                 click: (event) => {
                                     const clickedPoint = event.point;
+                                    const chart = clickedPoint.series.chart;
+                                    const series = chart.series[0];
+                                    const rootId = series.rootNode;
+                                    const rootNode = series.nodeMap[rootId];
+
+                                    const rootLevel = (rootNode?.id === '') ? 1 : (rootNode.level);
+                                    console.log('point.events.click - New root level:', rootLevel);
                                     console.log('point.events.click - clickedPoint:', clickedPoint);
                                     const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
                                     if (!linkedAnalysis) return;
