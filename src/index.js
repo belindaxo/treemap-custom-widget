@@ -31,6 +31,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
             `;
 
             this._lastSentCategories = [];
+            this._selectedPoint = null;
         }
 
         /**
@@ -58,6 +59,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 this._chart.destroy();
                 this._chart = null;
             }
+            this._selectedPoint = null;
         }
 
         /**
@@ -95,6 +97,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 if (this._chart) {
                     this._chart.destroy();
                     this._chart = null;
+                    this._selectedPoint = null;
                 }
                 return;
             }
@@ -106,6 +109,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 if (this._chart) {
                     this._chart.destroy();
                     this._chart = null;
+                    this._selectedPoint = null;
                 }
                 return;
             }
@@ -176,12 +180,45 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     reductionFactor: 10
                 },
                 dataLabels: {
-                    enabled: true, 
+                    enabled: true,
                     headers: false,
                     allowOverlap: true
                 },
                 data: seriesData,
                 levels: levels,
+                breadcrumbs: {
+                    events: {
+                        click: function (button, breadcrumbs) {
+                            // FILTERING LOGIC
+                            const rootId = breadcrumbs.levelOptions.id;
+                            console.log('Breadcrumbs - rootId:', rootId);
+                            const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+                            if (!linkedAnalysis) return;
+
+                            if (rootLevel === 1) {
+                                linkedAnalysis.removeFilters();
+                                return;
+                            }
+
+                            // Remove existing filters before applying new ones
+                            linkedAnalysis.removeFilters();
+
+                            const labels = rootId.split('|');
+                            console.log('Breadcrumbs - Labels:', labels);
+                            const selection = {};
+                            labels.forEach((label, index) => {
+                                const dim = dimensions[index];
+                                const matchingRow = data.find((item) => item[dim.key]?.label === label);
+                                if (dim && matchingRow) {
+                                    selection[dim.id] = matchingRow[dim.key].id;
+                                }
+                            });
+                            console.log('Breadcrumbs - Selection:', selection);
+
+                            linkedAnalysis.setFilters(selection);
+                        }.bind(this)
+                    }
+                }
             }]
 
             applyHighchartsDefaults();
@@ -222,6 +259,63 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     followPointer: false,
                     hideDelay: 0,
                     formatter: formatTooltip(scaleFormat, dimensions)
+                },
+                plotOptions: {
+                    series: {
+                        cursor: 'pointer',
+                        allowPointSelect: true,
+                        point: {
+                            events: {
+                                click: (event) => {
+                                    const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+                                    if (!linkedAnalysis) return;
+
+                                    if (clickedPoint.node.isLeaf) {
+                                        console.log('point.events.click - Leaf node clicked:', clickedPoint.name);
+
+                                        if (this._selectedPoint && this._selectedPoint !== clickedPoint) {
+                                            this._selectedPoint.select(false, false);
+                                        }
+                                        clickedPoint.select(true, false);
+                                        this._selectedPoint = clickedPoint;
+
+                                        const labels = clickedPoint.id.split('|');
+                                        const selection = {};
+                                        labels.forEach((label, index) => {
+                                            const dim = dimensions[index];
+                                            const matchingRow = data.find((item) => item[dim.key]?.label === label);
+                                            if (dim && matchingRow) {
+                                                selection[dim.id] = matchingRow[dim.key].id;
+                                            }
+                                        });
+
+                                        // linkedAnalysis.removeFilters();
+                                        console.log('point.events.click - Leaf Selection:', selection);
+                                        linkedAnalysis.setFilters(selection);
+                                        return;
+                                    }
+
+                                    if (rootLevel === 1) {
+                                        linkedAnalysis.removeFilters();
+                                        return;
+                                    }
+
+                                    const labels = rootId.split('|');
+                                    const selection = {};
+                                    labels.forEach((label, index) => {
+                                        const dim = dimensions[index];
+                                        const matchingRow = data.find((item) => item[dim.key]?.label === label);
+                                        if (dim && matchingRow) {
+                                            selection[dim.id] = matchingRow[dim.key].id;
+                                        }
+                                    });
+                                    console.log('point.events.click - Selection:', selection);
+
+                                    linkedAnalysis.setFilters(selection);
+                                }
+                            }
+                        }
+                    }
                 },
                 series
             };
