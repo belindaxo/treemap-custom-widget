@@ -6,7 +6,7 @@ import 'highcharts/modules/exporting';
 import { createChartStylesheet } from './config/styles';
 import { parseMetadata } from './data/metadataParser';
 import { processSeriesData } from './data/dataProcessor';
-import { applyHighchartsDefaults } from './config/highchartsSetup';
+import { applyHighchartsDefaults, overrideContextButtonSymbol } from './config/highchartsSetup';
 import { generateLevels, updateTitle, updateSubtitle } from './config/chartUtils';
 import { scaleValue } from './formatting/scaleFormatter';
 import { formatTooltip } from './formatting/tooltipformatter';
@@ -227,6 +227,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
             }]
 
             applyHighchartsDefaults();
+            overrideContextButtonSymbol();
 
             const chartOptions = {
                 chart: {
@@ -239,7 +240,28 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     enabled: false
                 },
                 exporting: {
-                    enabled: false
+                    enabled: true,
+                    buttons: {
+                        contextButton: {
+                            enabled: false,
+                        }
+                    },
+                    menuItemDefinitions: {
+                        resetFilters: {
+                            text: 'Reset Filters',
+                            onclick: () => {
+                                const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+                                if (linkedAnalysis) {
+                                    linkedAnalysis.removeFilters();
+                                }
+                                if (this._selectedPoint) {
+                                    this._selectedPoint.select(false, false);
+                                    this._selectedPoint = null;
+                                }
+                                this._renderChart(); // Re-render the chart to reset the state
+                            }
+                        }
+                    }
                 },
                 title: {
                     text: titleText,
@@ -327,6 +349,44 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 series
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+
+             const container = this.shadowRoot.getElementById('container');
+
+            container.addEventListener("mouseenter", () => {
+                if (this._chart) {
+                    this._chart.update(
+                        {
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        enabled: true,
+                                        symbol: 'contextButton',
+                                        menuItems: ['resetFilters']
+                                    },
+                                },
+                            },
+                        },
+                        true
+                    );
+                }
+            });
+
+            container.addEventListener("mouseleave", () => {
+                if (this._chart) {
+                    this._chart.update(
+                        {
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        enabled: false,
+                                    },
+                                },
+                            },
+                        },
+                        true
+                    );
+                }
+            });
         }
     }
     customElements.define('com-sap-sample-treemap', Treemap);

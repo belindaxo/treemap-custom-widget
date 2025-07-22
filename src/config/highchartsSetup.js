@@ -9,25 +9,25 @@ export function applyHighchartsDefaults() {
             thousandsSep: ','
         },
         colors: ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#006ac7', '#ccced2', '#bf8028', '#00e4a7'],
-        // navigation: {
-        //     buttonOptions: {
-        //         symbolStroke: '#004b8d',  // Outline color
-        //         symbolFill: 'transparent', // No fill
-        //         symbolStrokeWidth: 1,
-        //         // Core button shape settings
-        //         height: 32,          // Ensure square for circle
-        //         width: 32,
-        //         theme: {
-        //             r: 16,           // Rounded corners (half width = full circle)
-        //             fill: '#f7f7f7', // Background color
-        //             stroke: '#ccc',  // Thin outer border
-        //             'stroke-width': 0.8,
-        //             style: {
-        //                 cursor: 'pointer'
-        //             }
-        //         }
-        //     }
-        // }
+        navigation: {
+            buttonOptions: {
+                symbolStroke: '#004b8d',  // Outline color
+                symbolFill: 'transparent', // No fill
+                symbolStrokeWidth: 1,
+                // Core button shape settings
+                height: 32,          // Ensure square for circle
+                width: 32,
+                theme: {
+                    r: 16,           // Rounded corners (half width = full circle)
+                    fill: '#f7f7f7', // Background color
+                    stroke: '#ccc',  // Thin outer border
+                    'stroke-width': 0.8,
+                    style: {
+                        cursor: 'pointer'
+                    }
+                }
+            }
+        }
     });
 }
 
