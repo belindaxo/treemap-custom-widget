@@ -308,10 +308,10 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                         return;
                                     }
 
-                                    if (rootLevel === 1) {
-                                        linkedAnalysis.removeFilters();
-                                        return;
-                                    }
+                                    // if (rootLevel === 1) {
+                                    //     linkedAnalysis.removeFilters();
+                                    //     return;
+                                    // }
 
                                     const labels = rootId.split('|');
                                     const selection = {};
