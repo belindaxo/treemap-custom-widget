@@ -182,7 +182,10 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 dataLabels: {
                     enabled: true,
                     headers: false,
-                    allowOverlap: true
+                    allowOverlap: true,
+                    style: {
+                        fontWeight: 'normal',
+                    }
                 },
                 data: seriesData,
                 levels: levels,
@@ -307,11 +310,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                         linkedAnalysis.setFilters(selection);
                                         return;
                                     }
-
-                                    // if (rootLevel === 1) {
-                                    //     linkedAnalysis.removeFilters();
-                                    //     return;
-                                    // }
 
                                     const labels = rootId.split('|');
                                     const selection = {};
