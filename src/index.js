@@ -234,7 +234,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     type: 'treemap',
                     style: {
                         fontFamily: "'72', sans-serif"
-                    }
+                    },
+                    animation: false
                 },
                 credits: {
                     enabled: false
@@ -350,7 +351,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
 
-             const container = this.shadowRoot.getElementById('container');
+            const container = this.shadowRoot.getElementById('container');
 
             container.addEventListener("mouseenter", () => {
                 if (this._chart) {
