@@ -235,7 +235,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     style: {
                         fontFamily: "'72', sans-serif"
                     },
-                    animation: false
+                    animation: true
                 },
                 credits: {
                     enabled: false
