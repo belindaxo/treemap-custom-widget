@@ -71,6 +71,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
+                'enableCluster',                                                                            // Treemap properties
                 'customColors'                                                                              // Color settings
             ];
         }
@@ -174,7 +175,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 animationLimit: 1000,
                 borderColor: '#ffffff',
                 cluster: {
-                    enabled: true,
+                    enabled: this.enableCluster,
                     pixelWidth: 15,
                     pixelHeight: 30,
                     reductionFactor: 10

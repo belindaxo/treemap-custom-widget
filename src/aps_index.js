@@ -139,6 +139,15 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                 </td>
             </tr>
         </table>
+        <legend style="font-weight: bold; font-size: 18px;"> Treemap Settings </legend>
+        <table>
+            <tr>
+                <td>
+                    <input id="enableCluster" type="checkbox" checked>
+                    <label for="enableCluster">Enable Clustering</label> 
+                </td>
+            </tr>
+        </table>
         <tr>
             <button id="resetDefaults" type="button" style="margin-top: 10px; margin-bottom: 10px;">Reset to Default</button>
         </tr>
@@ -177,6 +186,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                 subtitleColor: '#000000',
                 scaleFormat: 'unformatted',
                 decimalPlaces: '2',
+                enableCluster: true
             }
 
             this._shadowRoot = this.attachShadow({ mode: 'open' });
@@ -248,6 +258,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
             this._shadowRoot.getElementById('subtitleColor').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('scaleFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('decimalPlaces').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('enableCluster').addEventListener('change', this._submit.bind(this));
 
             // Reset button logic
             this._shadowRoot.getElementById('resetDefaults').addEventListener('click', () => {
@@ -293,6 +304,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                         subtitleColor: this.subtitleColor,
                         scaleFormat: this.scaleFormat,
                         decimalPlaces: this.decimalPlaces,
+                        enableCluster: this.enableCluster,
                         customColors: this.customColors,
                         validCategoryNames: this.validCategoryNames
                     }
@@ -383,6 +395,13 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
         }
         set decimalPlaces(value) {
             this._shadowRoot.getElementById('decimalPlaces').value = value;
+        }
+
+        get enableCluster() {
+            return this._shadowRoot.getElementById('enableCluster').checked;
+        }
+        set enableCluster(value) {
+            this._shadowRoot.getElementById('enableCluster').checked = value;
         }
 
         get customColors() {
