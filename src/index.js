@@ -193,12 +193,9 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 breadcrumbs: {
                     events: {
                         click: function (button, breadcrumbs) {
-                            const chart = this._chart;
-                            const series = chart.series[0];
                             const newLevel = breadcrumbs.level;
                             const rootLevel = (newLevel === 0) ? 1 : newLevel;
                             const rootId = breadcrumbs.levelOptions.id;
-                            console.log('Breadcrumbs - rootId:', rootId);
                             const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
                             if (!linkedAnalysis) return;
 
@@ -260,7 +257,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                     this._selectedPoint.select(false, false);
                                     this._selectedPoint = null;
                                 }
-                                this._renderChart(); // Re-render the chart to reset the state
+                                this._renderChart(); 
                             }
                         }
                     }
@@ -300,17 +297,12 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                     const chart = clickedPoint.series.chart;
                                     const series = chart.series[0];
                                     const rootId = series.rootNode;
-                                    const rootNode = series.nodeMap[rootId];
 
-                                    const rootLevel = (rootNode?.id === '') ? 1 : (rootNode.level);
-                                    console.log('point.events.click - New root level:', rootLevel);
                                     console.log('point.events.click - clickedPoint:', clickedPoint);
                                     const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
                                     if (!linkedAnalysis) return;
 
                                     if (clickedPoint.node.isLeaf) {
-                                        console.log('point.events.click - Leaf node clicked:', clickedPoint.name);
-
                                         if (this._selectedPoint && this._selectedPoint !== clickedPoint) {
                                             this._selectedPoint.select(false, false);
                                         }
@@ -326,7 +318,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                                 selection[dim.id] = matchingRow[dim.key].id;
                                             }
                                         });
-                                        console.log('point.events.click - Leaf Selection:', selection);
                                         linkedAnalysis.setFilters(selection);
                                         return;
                                     }
@@ -340,8 +331,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                             selection[dim.id] = matchingRow[dim.key].id;
                                         }
                                     });
-                                    console.log('point.events.click - Selection:', selection);
-
                                     linkedAnalysis.setFilters(selection);
                                 }
                             }
