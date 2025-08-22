@@ -357,7 +357,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                                 },
                             },
                         },
-                        true
+                        true, false, false
                     );
                 }
             });
