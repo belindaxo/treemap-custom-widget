@@ -14,14 +14,14 @@
             "tag": "com-sap-sample-treemap",
             "url": "https://belindaxo.github.io/treemap-custom-widget/dist/bundle.js",
             "integrity": "sha256-QQ75cOa2t6lQ53adZYefwnHVbyWLjpIxPU1pE+uahxU=",
-            "ignoreIntegrity": true
+            "ignoreIntegrity": false
         },
         {
             "kind": "styling",
             "tag": "com-sap-sample-treemap-aps",
             "url": "https://belindaxo.github.io/treemap-custom-widget/dist/bundle.js",
             "integrity": "sha256-QQ75cOa2t6lQ53adZYefwnHVbyWLjpIxPU1pE+uahxU=",
-            "ignoreIntegrity": true
+            "ignoreIntegrity": false
         }
     ],
     "properties": {
