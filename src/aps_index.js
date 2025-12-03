@@ -120,6 +120,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                         <option value="k">Thousands (k)</option>
                         <option value="m">Millions (m)</option>
                         <option value="b">Billions (b)</option>
+                        <option value="percent">Percentage (%)</option>
                     </select>
                 </td>
             </tr>

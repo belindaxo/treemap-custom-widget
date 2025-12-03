@@ -21,7 +21,12 @@ export function formatTooltip(scaleFormat, dimensions) {
         
         const { scaledValue, valueSuffix } = scaleFormat(rawVal);
         const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
-        const valueWithSuffix = `${value} ${valueSuffix}`;
+        let valueWithSuffix;
+        if (valueSuffix === '%') {
+            valueWithSuffix = `${value}${valueSuffix}`;
+        } else {
+            valueWithSuffix = `${value} ${valueSuffix}`;
+        }
 
         return `
             <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
