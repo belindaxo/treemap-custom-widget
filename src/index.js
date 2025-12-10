@@ -397,12 +397,12 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     );
                 }
             });
-            
+
             // Plugin for relative font size
             Highcharts.addEvent(Highcharts.Series, 'drawDataLabels', function () {
                 if (this.type === 'treemap') {
                     this.points.forEach(point => {
-                        if (point.shapeArgs) {
+                        if (point.node.isLeaf && point.shapeArgs) {
                             const area = point.shapeArgs.width * point.shapeArgs.height;
                             if (point.dlOptions) {
                                 point.dlOptions.style = point.dlOptions.style || {};
