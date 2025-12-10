@@ -395,20 +395,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     );
                 }
             });
-
-            Highcharts.addEvent(Highcharts.Series, 'drawDataLabels', function () {
-                if (this.type === 'treemap') {
-                    this.points.forEach(point => {
-                        if (point.shapeArgs) {
-                            const area = point.shapeArgs.width * point.shapeArgs.height;
-                            if (point.dlOptions) {
-                                point.dlOptions.style = point.dlOptions.style || {};
-                                point.dlOptions.style.fontSize = `${Math.min(32, 7 + Math.round(area * 0.0008))}px`;
-                            }
-                        }
-                    });
-                }
-            });
         }
     }
     customElements.define('com-sap-sample-treemap', Treemap);
