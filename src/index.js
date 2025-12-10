@@ -187,8 +187,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     style: {
                         fontWeight: 'normal',
                     },
-                    format: '<span style="font-size: 2em">{point.name}</span><br><span style="font-size: 1em">' +
-                        '{point.value}</span>'
+                    format: '{point.name}<br>' +
+                        '{point.value}'
                     // formatter: function () {
                     //     const name = this.point.name;
                     //     const value = this.point.value;
