@@ -187,14 +187,23 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     style: {
                         fontWeight: 'normal',
                     },
-                    format: '{point.name}<br>' +
-                        '{point.value}'
-                    // formatter: function () {
-                    //     const name = this.point.name;
-                    //     const value = this.point.value;
-                    //     return `<div style=`
-
-                    // }
+                    // format: '{point.name}<br>' +
+                    //     '{point.value}'
+                    formatter: function () {
+                        const name = this.point.name;
+                        const value = this.point.value;
+                        const { scaledValue, valueSuffix } = scaleFormat(value);
+                        const formattedValue = Highcharts.numberFormat(scaledValue, -1, '.', ',');
+                        let valueWithSuffix;
+                        if (valueSuffix === '%') {
+                            valueWithSuffix = `${formattedValue}${valueSuffix}`;
+                        } else {
+                            valueWithSuffix = `${formattedValue} ${valueSuffix}`;
+                        }
+                        if (this.point.node.isLeaf) {
+                            return `${name}<br>${valueWithSuffix}`;
+                        }
+                    }
                 },
                 data: seriesData,
                 levels: levels,
