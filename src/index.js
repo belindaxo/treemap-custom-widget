@@ -184,9 +184,18 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     enabled: true,
                     headers: false,
                     allowOverlap: true,
+                    useHTML: true,
                     style: {
                         fontWeight: 'normal',
-                    }
+                    },
+                    format: '{point.name}<br><span style="font-size: 0.7em">' +
+                        '{point.value}</span>'
+                    // formatter: function () {
+                    //     const name = this.point.name;
+                    //     const value = this.point.value;
+                    //     return `<div style=`
+
+                    // }
                 },
                 data: seriesData,
                 levels: levels,
