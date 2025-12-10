@@ -30,7 +30,7 @@ export function processSeriesData(data, dimensions, measures) {
 
                 // Add value only on leaf nodes
                 if (level === dimensions.length - 1) {
-                    const raw = row[measures[1].key]?.raw;
+                    const raw = row[measures[0].key]?.raw;
                     const val = (typeof raw === 'number' && isFinite(raw)) ? raw : 0;
                     node.value = val;
 
