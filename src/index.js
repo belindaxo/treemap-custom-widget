@@ -198,7 +198,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                         if (valueSuffix === '%') {
                             valueWithSuffix = `${formattedValue}${valueSuffix}`;
                         } else {
-                            valueWithSuffix = `${formattedValue} ${valueSuffix}`;
+                            valueWithSuffix = `${formattedValue}`;
                         }
                         if (this.point.node.isLeaf) {
                             return `${name}<br>${valueWithSuffix}`;
