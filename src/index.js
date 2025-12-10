@@ -184,7 +184,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     enabled: true,
                     headers: false,
                     allowOverlap: true,
-                    useHTML: true,
                     style: {
                         fontWeight: 'normal',
                     },
