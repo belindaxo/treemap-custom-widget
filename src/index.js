@@ -215,12 +215,12 @@ import { formatTooltip } from './formatting/tooltipformatter';
 
                         if (this.point.node.isLeaf) {
                             // Leaf: name + secondary measure (or primary if no secondary)
-                            return `${name}<br>${valueWithSuffix}`;
+                            return `${name}<br><span style="font-size: 0.7em">${valueWithSuffix}</span>`;
                         } else {
                             // Non-leaf: just name
                             return `${name}`;
                         }
-                        
+
                         // const value = this.point.value;
                         // const { scaledValue, valueSuffix } = scaleFormat(value);
                         // const formattedValue = Highcharts.numberFormat(scaledValue, -1, '.', ',');
