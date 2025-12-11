@@ -406,7 +406,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                             const area = point.shapeArgs.width * point.shapeArgs.height;
                             if (point.dlOptions) {
                                 point.dlOptions.style = point.dlOptions.style || {};
-                                point.dlOptions.style.fontSize = `${Math.min(32, 7 + Math.round(area * 0.0008))}px`;
+                                point.dlOptions.style.fontSize = `${Math.min(24, 7 + Math.round(area * 0.0008))}px`;
                             }
                         }
                     });
