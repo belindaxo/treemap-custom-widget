@@ -6,7 +6,7 @@ import * as Highcharts from 'highcharts';
  * @param {Array} dimensions - An array of dimension objects.
  * @returns {Function} A function that formats the tooltip content.
  */
-export function formatTooltip(scaleFormat, dimensions) {
+export function formatTooltip(scaleFormat, dimensions, secondaryMeasureName) {
     return function () {
         console.log(this);
         const seriesName = this.series.name;
@@ -14,6 +14,7 @@ export function formatTooltip(scaleFormat, dimensions) {
         const description = this.point.description;
         let rawVal = 0;
 
+        // Primary value (size)
         if (this.node.isLeaf) {
             rawVal = this.value;
         } else {
@@ -29,6 +30,21 @@ export function formatTooltip(scaleFormat, dimensions) {
             valueWithSuffix = `${value} ${valueSuffix}`;
         }
 
+        // Optional secondary value (from measures[1])
+        let secondaryRowHtml = '';
+        if (secondaryMeasureName && this.node.isLeaf && typeof this.point.secondaryRaw === 'number') {
+            const { scaledValue: secondaryScaled, valueSuffix: secondarySuffix } = scaleFormat(this.point.secondaryRaw);
+            const secondaryValue = Highcharts.numberFormat(secondaryScaled, -1, '.', ',');
+            const secondaryWithSuffix = secondarySuffix === '%' ? `${secondaryValue}${secondarySuffix}` : `${secondaryValue} ${secondarySuffix}`;
+            
+            secondaryRowHtml = `
+                <tr>
+                    <td style="text-align: left; padding-right: 10px;">${secondaryMeasureName}</td>
+                    <td style="text-align: right; padding-left: 10px;">${secondaryWithSuffix}</td>
+                </tr>
+            `;
+        }
+
         return `
             <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
                 <div style="font-size: 14px; font-weight: normal; color: #666666;">${seriesName}</div>
@@ -39,6 +55,7 @@ export function formatTooltip(scaleFormat, dimensions) {
                         <td style="text-align: left; padding-right: 10px;">${description}</td>
                         <td style="text-align: right; padding-left: 10px;">${name}</td>
                     </tr>
+                    ${secondaryRowHtml}
                 </table>
             </div>
         `;

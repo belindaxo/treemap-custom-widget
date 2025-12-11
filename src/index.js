@@ -115,7 +115,10 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 return;
             }
 
-            const seriesData = processSeriesData(data, dimensions, measures[0]);
+            const primaryMeasure = measures[0];
+            const secondaryMeasure = measures[1] || null;
+
+            const seriesData = processSeriesData(data, dimensions, primaryMeasure, secondaryMeasure);
             console.log('processSeriesData - seriesData: ', seriesData);
             console.log('Root nodes in seriesData:', seriesData.filter(node => !node.parent));
 
@@ -155,7 +158,9 @@ import { formatTooltip } from './formatting/tooltipformatter';
 
             const scaleFormat = (value) => scaleValue(value, this.scaleFormat, this.decimalPlaces);
 
-            const seriesName = measures[0]?.label || 'Measure';
+            const seriesName = primaryMeasure?.label || 'Measure';
+            const secondarySeriesName = secondaryMeasure?.label || null; // Use in tooltip
+
             const dimDescriptions = dimensions.map(dim => {
                 const dimDescription = dim.description || 'Dimension Description';
                 return dimDescription;
@@ -190,20 +195,46 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     //     '{point.value}'
                     formatter: function () {
                         const name = this.point.name;
-                        const value = this.point.value;
-                        const { scaledValue, valueSuffix } = scaleFormat(value);
+                        // Prefer the second measure if present; otherwise use primary measure
+                        let labelRaw;
+                        if (typeof this.point.secondaryRaw === 'number') {
+                            labelRaw = this.point.secondaryRaw;
+                        } else {
+                            labelRaw = this.point.value;
+                        }
+
+                        const { scaledValue, valueSuffix } = scaleFormat(labelRaw);
                         const formattedValue = Highcharts.numberFormat(scaledValue, -1, '.', ',');
+
                         let valueWithSuffix;
                         if (valueSuffix === '%') {
                             valueWithSuffix = `${formattedValue}${valueSuffix}`;
                         } else {
                             valueWithSuffix = `${formattedValue}`;
                         }
+
                         if (this.point.node.isLeaf) {
+                            // Leaf: name + secondary measure (or primary if no secondary)
                             return `${name}<br>${valueWithSuffix}`;
                         } else {
+                            // Non-leaf: just name
                             return `${name}`;
                         }
+                        
+                        // const value = this.point.value;
+                        // const { scaledValue, valueSuffix } = scaleFormat(value);
+                        // const formattedValue = Highcharts.numberFormat(scaledValue, -1, '.', ',');
+                        // let valueWithSuffix;
+                        // if (valueSuffix === '%') {
+                        //     valueWithSuffix = `${formattedValue}${valueSuffix}`;
+                        // } else {
+                        //     valueWithSuffix = `${formattedValue}`;
+                        // }
+                        // if (this.point.node.isLeaf) {
+                        //     return `${name}<br>${valueWithSuffix}`;
+                        // } else {
+                        //     return `${name}`;
+                        // }
                     }
                 },
                 data: seriesData,
@@ -302,7 +333,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     useHTML: true,
                     followPointer: false,
                     hideDelay: 0,
-                    formatter: formatTooltip(scaleFormat, dimensions)
+                    formatter: formatTooltip(scaleFormat, dimensions, secondarySeriesName)
                 },
                 plotOptions: {
                     series: {
