@@ -115,8 +115,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 return;
             }
 
-            const [measure] = measures;
-            const seriesData = processSeriesData(data, dimensions, measure);
+            const seriesData = processSeriesData(data, dimensions, measures[0]);
             console.log('processSeriesData - seriesData: ', seriesData);
             console.log('Root nodes in seriesData:', seriesData.filter(node => !node.parent));
 
