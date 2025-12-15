@@ -8,7 +8,7 @@ import { parseMetadata } from './data/metadataParser';
 import { processSeriesData } from './data/dataProcessor';
 import { applyHighchartsDefaults, overrideContextButtonSymbol } from './config/highchartsSetup';
 import { generateLevels, updateTitle, updateSubtitle } from './config/chartUtils';
-import { scaleValue } from './formatting/scaleFormatter';
+import { primaryScaleFormat, secondaryScaleFormat } from './formatting/scaleFormatter';
 import { formatTooltip } from './formatting/tooltipformatter';
 
 (function () {
@@ -70,7 +70,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
             return [
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
-                'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
+                'primaryScaleFormat', 'decimalPlaces', 'secondaryScaleFormat', 'secondaryDecimalPlaces',    // Number formatting properties
                 'enableCluster',                                                                            // Treemap properties
                 'customColors'                                                                              // Color settings
             ];
@@ -156,7 +156,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
 
             console.log('seriesData with colors: ', seriesData);
 
-            const scaleFormat = (value) => scaleValue(value, this.scaleFormat, this.decimalPlaces);
+            const primScaleFormat = (value) => primaryScaleFormat(value, this.scaleFormat, this.decimalPlaces);
+            const secScaleFormat = (value) => secondaryScaleFormat(value, this.secondaryScaleFormat, this.secondaryDecimalPlaces);
 
             const seriesName = primaryMeasure?.label || 'Measure';
             const secondarySeriesName = secondaryMeasure?.label || null; // Use in tooltip
@@ -203,7 +204,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                             labelRaw = this.point.value;
                         }
 
-                        const { scaledValue, valueSuffix } = scaleFormat(labelRaw);
+                        const { scaledValue, valueSuffix } = typeof this.point.secondaryRaw === 'number' ? secScaleFormat(labelRaw) : primScaleFormat(labelRaw);
                         const formattedValue = Highcharts.numberFormat(scaledValue, -1, '.', ',');
 
                         let valueWithSuffix;
@@ -333,7 +334,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     useHTML: true,
                     followPointer: false,
                     hideDelay: 0,
-                    formatter: formatTooltip(scaleFormat, dimensions, secondarySeriesName)
+                    formatter: formatTooltip(primScaleFormat, secScaleFormat, dimensions, secondarySeriesName)
                 },
                 plotOptions: {
                     series: {

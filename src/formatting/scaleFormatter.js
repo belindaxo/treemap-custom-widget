@@ -5,7 +5,7 @@
  * @param {number} decimalPlaces 
  * @returns {Object} An object containing the scaled value and its suffix.
  */
-export function scaleValue(value, scaleFormat, decimalPlaces) {
+function scaleValue(value, scaleFormat, decimalPlaces) {
     let scaled = value;
     let suffix = '';
 
@@ -34,4 +34,12 @@ export function scaleValue(value, scaleFormat, decimalPlaces) {
         scaledValue: scaled.toFixed(decimalPlaces),
         valueSuffix: suffix
     };
+}
+
+export function primaryScaleFormat(value, scaleFormat, decimalPlaces) {
+    return scaleValue(value, scaleFormat, decimalPlaces);
+}
+
+export function secondaryScaleFormat(value, scaleFormat, decimalPlaces) {
+    return scaleValue(value, scaleFormat, decimalPlaces);
 }

@@ -93,6 +93,16 @@
             "description": "The number of decimal places to display",
             "default": 2
         },
+        "secondaryScaleFormat": {
+            "type": "string",
+            "description": "The scale of the secondary numbers (unformatted, k, m, b)",
+            "default": "unformatted"
+        },
+        "secondaryDecimalPlaces": {
+            "type": "integer",
+            "description": "The number of decimal places to display for secondary values",
+            "default": 2
+        },
         "enableCluster": {
             "type": "boolean",
             "description": "Enable clustering of treemap nodes",

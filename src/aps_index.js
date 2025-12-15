@@ -1,3 +1,5 @@
+import { secondaryScaleFormat } from "./formatting/scaleFormatter";
+
 const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#006ac7', '#ccced2', '#bf8028', '#00e4a7'];
 (function () {
     /**
@@ -111,11 +113,11 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
         <legend style="font-weight: bold;font-size: 18px;"> Number Formatting </legend>
         <table>
             <tr>
-                <td>Scale Format</td>
+                <td>Primary Scale Format</td>
             </tr>
             <tr>
                 <td>
-                    <select id="scaleFormat">
+                    <select id="primaryScaleFormat">
                         <option value="unformatted" selected>Unformatted</option>
                         <option value="k">Thousands (k)</option>
                         <option value="m">Millions (m)</option>
@@ -130,6 +132,37 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
             <tr>
                 <td>
                     <select id="decimalPlaces">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td>Secondary Scale Format</td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="secondaryScaleFormat">
+                        <option value="unformatted" selected>Unformatted</option>
+                        <option value="k">Thousands (k)</option>
+                        <option value="m">Millions (m)</option>
+                        <option value="b">Billions (b)</option>
+                        <option value="percent">Percentage (%)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Decimal Places</td>
+            </tr>
+            <tr>
+                <td>
+                    <select id="secondaryDecimalPlaces">
                         <option value="0">0</option>
                         <option value="1">1</option>
                         <option value="2" selected>2</option>
@@ -185,8 +218,10 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                 subtitleFontStyle: 'normal',
                 subtitleAlignment: 'left',
                 subtitleColor: '#000000',
-                scaleFormat: 'unformatted',
+                primaryScaleFormat: 'unformatted',
                 decimalPlaces: '2',
+                secondaryScaleFormat: 'unformatted',
+                secondaryDecimalPlaces: '2',
                 enableCluster: true
             }
 
@@ -257,8 +292,10 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
             this._shadowRoot.getElementById('subtitleFontStyle').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('subtitleAlignment').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('subtitleColor').addEventListener('change', this._submit.bind(this));
-            this._shadowRoot.getElementById('scaleFormat').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('primaryScaleFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('decimalPlaces').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('secondaryScaleFormat').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('secondaryDecimalPlaces').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('enableCluster').addEventListener('change', this._submit.bind(this));
 
             // Reset button logic
@@ -303,8 +340,10 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                         subtitleFontStyle: this.subtitleFontStyle,
                         subtitleAlignment: this.subtitleAlignment,
                         subtitleColor: this.subtitleColor,
-                        scaleFormat: this.scaleFormat,
+                        primaryScaleFormat: this.primaryScaleFormat,
                         decimalPlaces: this.decimalPlaces,
+                        secondaryScaleFormat: this.secondaryScaleFormat,
+                        secondaryDecimalPlaces: this.secondaryDecimalPlaces,
                         enableCluster: this.enableCluster,
                         customColors: this.customColors,
                         validCategoryNames: this.validCategoryNames
@@ -384,11 +423,11 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
             this._shadowRoot.getElementById('subtitleColor').value = value;
         }
 
-        get scaleFormat() {
-            return this._shadowRoot.getElementById('scaleFormat').value;
+        get primaryScaleFormat() {
+            return this._shadowRoot.getElementById('primaryScaleFormat').value;
         }
-        set scaleFormat(value) {
-            this._shadowRoot.getElementById('scaleFormat').value = value;
+        set primaryScaleFormat(value) {
+            this._shadowRoot.getElementById('primaryScaleFormat').value = value;
         }
 
         get decimalPlaces() {
@@ -396,6 +435,20 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
         }
         set decimalPlaces(value) {
             this._shadowRoot.getElementById('decimalPlaces').value = value;
+        }
+
+        get secondaryScaleFormat() {
+            return this._shadowRoot.getElementById('secondaryScaleFormat').value;
+        }
+        set secondaryScaleFormat(value) {
+            this._shadowRoot.getElementById('secondaryScaleFormat').value = value;
+        }
+
+        get secondaryDecimalPlaces() {
+            return this._shadowRoot.getElementById('secondaryDecimalPlaces').value;
+        }
+        set secondaryDecimalPlaces(value) {
+            this._shadowRoot.getElementById('secondaryDecimalPlaces').value = value;
         }
 
         get enableCluster() {

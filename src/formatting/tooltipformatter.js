@@ -6,7 +6,7 @@ import * as Highcharts from 'highcharts';
  * @param {Array} dimensions - An array of dimension objects.
  * @returns {Function} A function that formats the tooltip content.
  */
-export function formatTooltip(scaleFormat, dimensions, secondaryMeasureName) {
+export function formatTooltip(primScaleFormat, secScaleFormat, dimensions, secondaryMeasureName) {
     return function () {
         console.log(this);
         const seriesName = this.series.name;
@@ -21,7 +21,7 @@ export function formatTooltip(scaleFormat, dimensions, secondaryMeasureName) {
             rawVal = this.node.childrenTotal;
         }
         
-        const { scaledValue, valueSuffix } = scaleFormat(rawVal);
+        const { scaledValue, valueSuffix } = primScaleFormat(rawVal);
         const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
         let valueWithSuffix;
         if (valueSuffix === '%') {
@@ -33,7 +33,7 @@ export function formatTooltip(scaleFormat, dimensions, secondaryMeasureName) {
         // Optional secondary value (from measures[1])
         let secondaryRowHtml = '';
         if (secondaryMeasureName && this.node.isLeaf && typeof this.point.secondaryRaw === 'number') {
-            const { scaledValue: secondaryScaled, valueSuffix: secondarySuffix } = scaleFormat(this.point.secondaryRaw);
+            const { scaledValue: secondaryScaled, valueSuffix: secondarySuffix } = secScaleFormat(this.point.secondaryRaw);
             const secondaryValue = Highcharts.numberFormat(secondaryScaled, -1, '.', ',');
             const secondaryWithSuffix = secondarySuffix === '%' ? `${secondaryValue}${secondarySuffix}` : `${secondaryValue} ${secondarySuffix}`;
             
