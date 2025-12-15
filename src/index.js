@@ -71,7 +71,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'primaryScaleFormat', 'decimalPlaces', 'secondaryScaleFormat', 'secondaryDecimalPlaces',    // Number formatting properties
-                'enableCluster',                                                                            // Treemap properties
+                'enableCluster', 'showValueInDataLabels',                                                   // Treemap properties
                 'customColors'                                                                              // Color settings
             ];
         }
@@ -159,6 +159,8 @@ import { formatTooltip } from './formatting/tooltipformatter';
             const primScaleFormat = (value) => primaryScaleFormat(value, this.primaryScaleFormat, this.decimalPlaces);
             const secScaleFormat = (value) => secondaryScaleFormat(value, this.secondaryScaleFormat, this.secondaryDecimalPlaces);
 
+            const showValueInDataLabels = this.showValueInDataLabels;
+
             const seriesName = primaryMeasure?.label || 'Measure';
             const secondarySeriesName = secondaryMeasure?.label || null; // Use in tooltip
 
@@ -196,6 +198,11 @@ import { formatTooltip } from './formatting/tooltipformatter';
                     //     '{point.value}'
                     formatter: function () {
                         const name = this.point.name;
+
+                        if (!showValueInDataLabels) {
+                            return `${name}`;
+                        }
+
                         // Prefer the second measure if present; otherwise use primary measure
                         let labelRaw;
                         if (typeof this.point.secondaryRaw === 'number') {

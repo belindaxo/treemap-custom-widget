@@ -108,6 +108,11 @@
             "description": "Enable clustering of treemap nodes",
             "default": true
         },
+        "showValueInDataLabels": {
+            "type": "boolean",
+            "description": "Show the value part of data labels (otherwise show name only).",
+            "default": true
+        },
         "customColors": {
             "type": "CustomColor[]",
             "description": "List of category-color mappings",

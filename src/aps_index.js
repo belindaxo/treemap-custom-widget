@@ -181,6 +181,12 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                     <label for="enableCluster">Enable Clustering</label> 
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <input id="showValueInDataLabels" type="checkbox" checked>
+                    <label for="showValueInDataLabels">Show values in data labels</label>
+                </td>
+            </tr>
         </table>
         <tr>
             <button id="resetDefaults" type="button" style="margin-top: 10px; margin-bottom: 10px;">Reset to Default</button>
@@ -222,7 +228,8 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                 decimalPlaces: '2',
                 secondaryScaleFormat: 'unformatted',
                 secondaryDecimalPlaces: '2',
-                enableCluster: true
+                enableCluster: true,
+                showValueInDataLabels: true
             }
 
             this._shadowRoot = this.attachShadow({ mode: 'open' });
@@ -297,6 +304,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
             this._shadowRoot.getElementById('secondaryScaleFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('secondaryDecimalPlaces').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('enableCluster').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('showValueInDataLabels').addEventListener('change', this._submit.bind(this));
 
             // Reset button logic
             this._shadowRoot.getElementById('resetDefaults').addEventListener('click', () => {
@@ -345,6 +353,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                         secondaryScaleFormat: this.secondaryScaleFormat,
                         secondaryDecimalPlaces: this.secondaryDecimalPlaces,
                         enableCluster: this.enableCluster,
+                        showValueInDataLabels: this.showValueInDataLabels,
                         customColors: this.customColors,
                         validCategoryNames: this.validCategoryNames
                     }
@@ -456,6 +465,13 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
         }
         set enableCluster(value) {
             this._shadowRoot.getElementById('enableCluster').checked = value;
+        }
+
+        get showValueInDataLabels() {
+            return this._shadowRoot.getElementById('showValueInDataLabels').checked;
+        }
+        set showValueInDataLabels(value) {
+            this._shadowRoot.getElementById('showValueInDataLabels').checked = value;
         }
 
         get customColors() {
