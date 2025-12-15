@@ -156,7 +156,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
 
             console.log('seriesData with colors: ', seriesData);
 
-            const primScaleFormat = (value) => primaryScaleFormat(value, this.scaleFormat, this.decimalPlaces);
+            const primScaleFormat = (value) => primaryScaleFormat(value, this.primaryScaleFormat, this.decimalPlaces);
             const secScaleFormat = (value) => secondaryScaleFormat(value, this.secondaryScaleFormat, this.secondaryDecimalPlaces);
 
             const seriesName = primaryMeasure?.label || 'Measure';
@@ -170,7 +170,7 @@ import { formatTooltip } from './formatting/tooltipformatter';
             const autoTitle = `${seriesName} per ${dimPart}`;
             const titleText = updateTitle(autoTitle, this.chartTitle);
 
-            const subtitleText = updateSubtitle(this.chartSubtitle, this.scaleFormat);
+            const subtitleText = updateSubtitle(this.chartSubtitle, this.primaryScaleFormat);
 
             const series = [{
                 layoutAlgorithm: 'squarified',
@@ -221,21 +221,6 @@ import { formatTooltip } from './formatting/tooltipformatter';
                             // Non-leaf: just name
                             return `${name}`;
                         }
-
-                        // const value = this.point.value;
-                        // const { scaledValue, valueSuffix } = scaleFormat(value);
-                        // const formattedValue = Highcharts.numberFormat(scaledValue, -1, '.', ',');
-                        // let valueWithSuffix;
-                        // if (valueSuffix === '%') {
-                        //     valueWithSuffix = `${formattedValue}${valueSuffix}`;
-                        // } else {
-                        //     valueWithSuffix = `${formattedValue}`;
-                        // }
-                        // if (this.point.node.isLeaf) {
-                        //     return `${name}<br>${valueWithSuffix}`;
-                        // } else {
-                        //     return `${name}`;
-                        // }
                     }
                 },
                 data: seriesData,

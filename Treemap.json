@@ -83,7 +83,7 @@
             "description": "The color of the subtitle text",
             "default": "#000000"
         },
-        "scaleFormat": {
+        "primaryScaleFormat": {
             "type": "string",
             "description": "The scale of the numbers (unformatted, k, m, b)",
             "default": "unformatted"
